@@ -1,3 +1,4 @@
-rawdata/
+Preprocess/rawdata/
 .Rproj
-
+.Rhistory
+Preprocess/cdf-*

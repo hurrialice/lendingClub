@@ -78,7 +78,6 @@ apply(cdf, 1, function(i) sum(is.na(i))) -> tt
 cdf <- cdf[tt ==0, ]
 
 # delete all joint applications
-cdf$application_type[cdf$application_type == "Joint App"] <- NA
 
 
 # homogenous columns
@@ -93,7 +92,18 @@ cdf <- cdf[NA_portion==0,]
 savefile()
 
 # build a small demo dataset for easier coding
-cdf_temp <- cdf[sample(seq(nrow(cdf)), size = 30000),]
-write_csv(cdf_temp, "cdf_30000.csv")
+df_select <- list()
+i <- 1
+for(d in unique(cdf$issue_d)){
+  print(d)
+  df_sub <- cdf[cdf$issue_d == d,]
+  df_select <- rbind(df_select, df_sub[sample(seq(nrow(df_sub)), size=700),])
+  i = i+1
+}
+
+#df_select <- do.call(rbind, df_select)
+
+
+write_csv(df_select, "cdf_withJoint.csv")
 
 

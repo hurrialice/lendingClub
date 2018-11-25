@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1543179652229.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1982600762",
+    "id" : "BC4573DA",
+    "lastKnownWriteTime" : 1543182596,
+    "last_content_update" : 1543182596322,
+    "path" : "~/Documents/git_repos/lendingClub/Preprocess/feature_eng.R",
+    "project_path" : "feature_eng.R",
+    "properties" : {
+        "cursorPosition" : "72,56",
+        "scrollLine" : "56"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

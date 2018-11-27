@@ -1,6 +1,8 @@
 library(readr)
 setwd("~/Downloads/lending_club_data-master/")
 clean_csv <- read_csv("LoanStats.csv")
+rejcsv <- read_csv("RejectStats.csv")
+
 # LC_dict <- read_xls("../LCDataDictionary.xlsx")
 
 savefile <- function(){
@@ -18,12 +20,7 @@ rm(clean_csv)
 
 
 # choose only the 2016 data
-chosen_year <- c("2014","2015","2016")
-d2014 <- df[grepl(pattern = "2014", df$issue_d),]
-d2015 <- df[grepl(pattern = "2015", df$issue_d),]
-d2016 <- df[grepl(pattern = "2016", df$issue_d),]
-cdf <- rbind(d2014, d2015, d2016)
-rm(df, d2014, d2015, d2016)
+cdf <- df[grepl(pattern = "2016", df$issue_d),]
 
 
 # remove : funded_amnt_inv, subgrade
@@ -97,7 +94,7 @@ i <- 1
 for(d in unique(cdf$issue_d)){
   print(d)
   df_sub <- cdf[cdf$issue_d == d,]
-  df_select <- rbind(df_select, df_sub[sample(seq(nrow(df_sub)), size=700),])
+  df_select <- rbind(df_select, df_sub[sample(seq(nrow(df_sub)), size=2500),])
   i = i+1
 }
 
@@ -105,5 +102,35 @@ for(d in unique(cdf$issue_d)){
 
 
 write_csv(df_select, "cdf_withJoint.csv")
+acccsv <- read_csv("cdf_withJoint.csv")
 
 
+cdf$loan_status <- ifelse(cdf$loan_status %in% c("Fully Paid","Current"), 1, 0)
+
+
+
+
+
+
+###### make comparable accept dataframe with reject ones ######
+rejcsv$`Policy Code` <- NULL
+rejcsv$`Loan Title` <- NULL
+
+# sample 25000 from reject data where app time is in 2014 2015 2016
+df_select = list()
+for (i in c("2014", "2015","2016")){
+  df_select <- rbind(df_select, rejcsv[grepl(i, rejcsv$`Application Date`),])
+}
+rej <- df_select[sample(seq(nrow(df_select)), 25000),]
+
+
+
+rej_state <- table(rej$State)
+acc_state <- table(acccsv$addr_state)
+rate_state <- as.numeric(rej_state)/(as.numeric(rej_state)+as.numeric(acc_state))
+names(rate_state) <- names(rej_state)
+df_state <- data.frame(state=names(rate_state), rej_rate = rate_state)
+
+
+library(usmap)
+plot_usmap(regions="state", data=df_state, values = "rej_rate")

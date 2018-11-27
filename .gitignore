@@ -2,3 +2,5 @@ Preprocess/rawdata/
 .Rproj
 .Rhistory
 Preprocess/cdf-*
+Preprocess/RejectStats.csv
+.Rproj.user

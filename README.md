@@ -13,7 +13,7 @@
   * Only individual applications are considered.
   * For easier manipulation, we randomly selected 30000 rows into `cdf_30000.csv`
   * Rejected data are not used.
-3. 'Preprocess+LogisticModel.ipynb':
+3. `Preprocess+LogisticModel.ipynb`:
   * Preliminary feature selection based on correlation matrix of variables.
   * Explored feature selection methods: Recursive Feature Elimination and PCA.
   * Fitted a simple logistic regression model using gridsearchCV.
